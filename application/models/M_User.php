@@ -3,7 +3,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class M_User extends CI_Model
 {
-    private $table = "tb_user";
+    private $table = "user";
     private $primary = "id_user";
     var $column_order = array(null, 'fullname', 'username', 'section_name', 'departement_name', 'division_name', 'position_name', null); //set column field database for datatable orderable
     // var $column_order = array(null, 'fullname', 'section_name', 'departement_name',  'position_name', null); //set column field database for datatable orderable
@@ -19,12 +19,13 @@ class M_User extends CI_Model
         //     ->join('tb_position p', 'u.id_position=p.id_position', 'LEFT')
         //     ->join('tb_departement d', 'd.id_departement=s.id_departement', 'LEFT')
         //     ->join('tb_division div', 'd.id_division=div.id_division', 'LEFT');
-        $this->db->select('*')
-            ->from($this->table . " as u")
-            ->join('tb_section s', 'u.id_section=s.id_section', 'LEFT')
-            ->join('tb_position p', 'u.id_position=p.id_position', 'LEFT')
-            ->join('tb_departement d', 'u.id_departement=d.id_departement', 'LEFT')
-            ->join('tb_division div', 'u.id_division=div.id_division', 'LEFT');
+        // $this->db->select('*')
+        //     ->from($this->table . " as u")
+        //     ->join('tb_section s', 'u.id_section=s.id_section', 'LEFT')
+        //     ->join('tb_position p', 'u.id_position=p.id_position', 'LEFT')
+        //     ->join('tb_departement d', 'u.id_departement=d.id_departement', 'LEFT')
+        //     ->join('tb_division div', 'u.id_division=div.id_division', 'LEFT');
+        $this->db->select('*')->from($this->table);
         $i = 0;
         foreach ($this->column_search as $item) // loop column 
         {
@@ -115,11 +116,6 @@ class M_User extends CI_Model
     {
         $this->db->select('*')
             ->from($this->table . " as u")
-            ->join('tb_section s', 'u.id_section=s.id_section', 'LEFT')
-            ->join('tb_position p', 'u.id_position=p.id_position', 'LEFT')
-            ->join('tb_departement d', 'u.id_departement=d.id_departement', 'LEFT')
-            ->join('tb_division div', 'u.id_division=div.id_division', 'LEFT')
-            ->join('rules_akses r', 'u.user_status=r.user_status', 'LEFT')
             ->where("u." . $this->primary, $id);
         $data = $this->db->get()->row_array();
         return $data;
@@ -158,10 +154,6 @@ class M_User extends CI_Model
     {
         $this->db->select('*')
             ->from($this->table . " as u")
-            ->join('tb_section s', 'u.id_section=s.id_section', 'LEFT')
-            ->join('tb_position p', 'u.id_position=p.id_position', 'LEFT')
-            ->join('tb_departement d', 'u.id_departement=d.id_departement', 'LEFT')
-            ->join('tb_division div', 'u.id_division=div.id_division', 'LEFT')
             ->where(['u.username' => $username, 'u.password' => $password]);
         $data = $this->db->get()->row_array();
         return $data;

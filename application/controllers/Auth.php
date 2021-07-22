@@ -13,13 +13,13 @@ class Auth extends CI_Controller
         if ($this->session->userdata('id_user')) {
             redirect('home');
         }
-        $data['title'] = "Login Page - Bakrie Renewable Chemical";
+        $data['title'] = "Login Page - Brams Berkah";
         $this->form_validation->set_rules('username', 'Username', 'required|trim');
         $this->form_validation->set_rules('password', 'Password', 'trim|required');
         if ($this->form_validation->run() == false) {
-            $this->load->view('templates/auth_header', $data);
+            $this->load->view('template-user/auth_header', $data);
             $this->load->view('auth/index');
-            $this->load->view('templates/auth_footer');
+            $this->load->view('template-user/auth_footer');
         } else {
             $this->_login();
         }
@@ -33,19 +33,16 @@ class Auth extends CI_Controller
         if ($user) {
             $data = [
                 'id_user' => $user['id_user'],
-                'fullname' => $user['fullname'],
+                'username' => $user['username'],
                 'password' => $user['password'],
-                'nik' => $user['nik'],
-                'phone' => $user['phone'],
-                'id_section' => $user['id_section'],
-                'id_departement' => $user['id_departement'],
-                'id_division' => $user['id_division'],
-                'section_name' => $user['section_name'],
-                'departement_name' => $user['departement_name'],
-                'division_name' => $user['division_name'],
-                'id_position' => $user['id_position'],
-                'position_name' => $user['position_name'],
-                'user_status' => $user['user_status'],
+                'balance' => $user['balance'],
+                'jawaban' => $user['jawaban'],
+                'fullname' => $user['fullname'],
+                'email' => $user['email'],
+                'nama_bank' => $user['nama_bank'],
+                'nama_pemilik_bank' => $user['nama_pemilik_bank'],
+                'no_rek' => $user['no_rek'],
+                'pertanyaan' => $user['pertanyaan'],
             ];
 
             $this->session->set_userdata($data);
@@ -59,7 +56,17 @@ class Auth extends CI_Controller
     public function logout()
     {
         $data = [
-            'id_user', 'fullname', 'section_name', 'departement_name', 'division_name', 'id_position', 'position_name',
+            'id_user',
+            'username',
+            'password',
+            'balance',
+            'jawaban',
+            'fullname',
+            'email',
+            'nama_bank',
+            'nama_pemilik_bank',
+            'no_rek',
+            'pertanyaan'
         ];
         $this->session->unset_userdata($data);
         $this->session->sess_destroy();
